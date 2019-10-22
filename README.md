@@ -1,5 +1,7 @@
 # ansible-examples
 
+[![Build Status](https://dev.azure.com/IBM-Blockchain/ansible-examples/_apis/build/status/IBM-Blockchain.ansible-examples?branchName=master)](https://dev.azure.com/IBM-Blockchain/ansible-examples/_build/latest?definitionId=2&branchName=master)
+
 This repository contains a set of example Ansible playbooks for managing blockchain networks using the IBM Blockchain Platform. All of the example Ansible playbooks make use of the Ansible role `ibm.blockchain_platform_manager`, available from [Ansible Galaxy](https://galaxy.ansible.com/ibm/blockchain_platform_manager).
 
 two-org-network
