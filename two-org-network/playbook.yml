@@ -31,7 +31,7 @@
             enabled: true
           docker:
             name: ca.org1.example.com
-            port: 17054
+            port: 18050
           ibp:
             display_name: "Org1 CA"
         peers:
@@ -46,11 +46,12 @@
               secret: "org1peer1tlspw"
             docker:
               name: peer0.org1.example.com
-              port: 17051
-              chaincode_port: 17052
+              port: 18051
+              chaincode_port: 18052
+              operations_port: 18053
               couchdb:
                 name: couchdb0.org1.example.com
-                port: 5984
+                port: 18054
             ibp:
               display_name: "Org1 Peer1"
           - &Org1Peer2
@@ -64,11 +65,12 @@
               secret: "org1peer2tlspw"
             docker:
               name: peer1.org1.example.com
-              port: 17055
-              chaincode_port: 17056
+              port: 18055
+              chaincode_port: 18056
+              operations_port: 18057
               couchdb:
                 name: couchdb1.org1.example.com
-                port: 6984
+                port: 18058
             ibp:
               display_name: "Org1 Peer2"
         nodes: "{{ playbook_dir }}/nodes/Org1"
@@ -89,7 +91,7 @@
             enabled: true
           docker:
             name: ca.org2.example.com
-            port: 18054
+            port: 19050
           ibp:
             display_name: "Org2 CA"
         peers:
@@ -104,11 +106,12 @@
               secret: "org2peer1tlspw"
             docker:
               name: peer0.org2.example.com
-              port: 18051
-              chaincode_port: 18052
+              port: 19051
+              chaincode_port: 19052
+              operations_port: 19053
               couchdb:
                 name: couchdb0.org2.example.com
-                port: 7984
+                port: 19054
             ibp:
               display_name: "Org2 Peer1"
           - &Org2Peer2
@@ -122,11 +125,12 @@
               secret: "org2peer2tlspw"
             docker:
               name: peer1.org2.example.com
-              port: 18055
-              chaincode_port: 18056
+              port: 19055
+              chaincode_port: 19056
+              operations_port: 19057
               couchdb:
                 name: couchdb1.org2.example.com
-                port: 8984
+                port: 19058
             ibp:
               display_name: "Org2 Peer2"
         nodes: "{{ playbook_dir }}/nodes/Org2"
@@ -147,7 +151,7 @@
             enabled: true
           docker:
             name: ca.orderer.example.com
-            port: 19054
+            port: 17050
           ibp:
             display_name: "Orderer CA"
         orderer: &Orderer
@@ -164,7 +168,8 @@
               - *Org2
           docker:
             name: orderer.example.com
-            port: 17050
+            port: 17051
+            operations_port: 17052
           ibp:
             display_name: "Orderer1"
             cluster_name: "OrdererCluster"
