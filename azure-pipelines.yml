@@ -1,0 +1,24 @@
+  
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+---
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: "3.x"
+    displayName: Use Python 3.x
+  - script: pip install ansible docker
+    displayName: Install Python dependencies
+  - script: ansible-galaxy install -r requirements.yml
+    workingDirectory: two-org-network
+    displayName: Install Playbook dependencies
+  - script: ansible-playbook playbook.yml
+    workingDirectory: two-org-network
+    displayName: Run Playbook
