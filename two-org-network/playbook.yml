@@ -14,6 +14,10 @@
       docker:
         network: ibp_network
       saas: "{{ lookup('file', 'service-creds.json') | from_json }}"
+      software:
+        api_endpoint: https://ibp-console.example.org:32000
+        api_key: xxxxxxxx
+        api_secret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     organizations:
       - &Org1
         msp:
