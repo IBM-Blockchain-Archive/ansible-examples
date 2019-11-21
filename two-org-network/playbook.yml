@@ -28,7 +28,7 @@
           ibp:
             display_name: "Org1 MSP"
         ca: &Org1CA
-          id: "Org1CA"
+          id: "org1ca"
           admin_identity: "admin"
           admin_secret: "adminpw"
           tls:
@@ -40,7 +40,7 @@
             display_name: "Org1 CA"
         peers:
           - &Org1Peer1
-            id: "Org1Peer1"
+            id: "org1peer1"
             identity: "org1peer1"
             secret: "org1peer1pw"
             database_type: couchdb
@@ -59,7 +59,7 @@
             ibp:
               display_name: "Org1 Peer1"
           - &Org1Peer2
-            id: "Org1Peer2"
+            id: "org1peer2"
             identity: "org1peer2"
             secret: "org1peer2pw"
             database_type: couchdb
@@ -88,7 +88,7 @@
           ibp:
             display_name: "Org2 MSP"
         ca: &Org2CA
-          id: "Org2CA"
+          id: "org2ca"
           admin_identity: "admin"
           admin_secret: "adminpw"
           tls:
@@ -100,7 +100,7 @@
             display_name: "Org2 CA"
         peers:
           - &Org2Peer1
-            id: "Org2Peer1"
+            id: "org2peer1"
             identity: "org2peer1"
             secret: "org2peer1pw"
             database_type: leveldb
@@ -119,7 +119,7 @@
             ibp:
               display_name: "Org2 Peer1"
           - &Org2Peer2
-            id: "Org2Peer2"
+            id: "org2peer2"
             identity: "org2peer2"
             secret: "org2peer2pw"
             database_type: leveldb
@@ -148,7 +148,7 @@
           ibp:
             display_name: "Orderer MSP"
         ca: &OrdererCA
-          id: "OrdererCA"
+          id: "ordererca"
           admin_identity: "admin"
           admin_secret: "adminpw"
           tls:
@@ -159,7 +159,7 @@
           ibp:
             display_name: "Orderer CA"
         orderer: &Orderer
-          id: "Orderer1"
+          id: "orderer1"
           identity: "orderer1"
           secret: "orderer1pw"
           tls:
