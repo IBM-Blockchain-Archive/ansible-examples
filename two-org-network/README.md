@@ -1,6 +1,6 @@
 # two-org-network
 
-An Ansible playbook for standing up a IBM Blockchain Platform network with two organizations, `Org1` and `Org2`. Each organization has two peers. The two peers are configured with a single channel, `channel1`. The FabCar sample contract is instantiated on this channel, with an endorsement policy stating that both organizations must endorse any transactions.
+An Ansible playbook for building a Hyperledger Fabric network with two organizations, `Org1` and `Org2`. Each organization has two peers. The two peers are configured with a single channel, `channel1`. The FabCar sample contract is instantiated on this channel, with an endorsement policy stating that both organizations must endorse any transactions.
 
 To run this Ansible playbook, follow these steps:
 
