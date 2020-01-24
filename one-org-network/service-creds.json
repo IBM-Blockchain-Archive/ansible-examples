@@ -1,0 +1,9 @@
+{
+  "api_endpoint": "https://xxxxxx-optools.uss02.blockchain.cloud.ibm.com",
+  "apikey": "xxxxxx",
+  "configtxlator": "https://xxxxxx-configtxlator.uss02.blockchain.cloud.ibm.com",
+  "iam_apikey_description": "Auto-generated for key xxxxxx",
+  "iam_apikey_name": "xxxxxx",
+  "iam_role_crn": "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+  "iam_serviceid_crn": "crn:v1:bluemix:public:iam-identity::a/xxxxxx::serviceid:ServiceId-xxxxxx"
+}
