@@ -1,0 +1,159 @@
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+---
+- name: Deploy blockchain infrastructure and smart contracts
+  hosts: localhost
+  vars:
+    #
+    # For information on these configuration options, read the documentation:
+    # https://github.com/IBM-Blockchain/ansible-role-blockchain-platform-manager#example-playbook
+    #
+    infrastructure:
+      type: docker
+      docker:
+        network: ibp_network
+      saas: "{{ lookup('file', 'service-creds.json') | from_json }}"
+      software:
+        api_endpoint: https://ibp-console.example.org:32000
+        api_key: xxxxxxxx
+        api_secret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    organizations:
+      - &Org1
+        msp:
+          id: "Org1MSP"
+          admin:
+            identity: "org1Admin"
+            secret: "org1Adminpw"
+          ibp:
+            display_name: "Org1 MSP"
+        ca: &Org1CA
+          id: "Org1CA"
+          admin_identity: "admin"
+          admin_secret: "adminpw"
+          tls:
+            enabled: true
+          docker:
+            name: ca.org1.example.com
+            hostname: ca.org1.example.com
+            port: 18050
+          ibp:
+            display_name: "Org1 CA"
+        peers:
+          - &Org1Peer1
+            id: "Org1Peer1"
+            identity: "org1peer1"
+            secret: "org1peer1pw"
+            database_type: couchdb
+            tls:
+              enabled: true
+              identity: "org1peer1tls"
+              secret: "org1peer1tlspw"
+            docker:
+              name: peer0.org1.example.com
+              hostname: peer0.org1.example.com
+              port: 18051
+              chaincode_port: 18052
+              operations_port: 18053
+              couchdb:
+                name: couchdb0.org1.example.com
+                hostname: couchdb0.org1.example.com
+                port: 18054
+            ibp:
+              display_name: "Org1 Peer1"
+          - &Org1Peer2
+            id: "Org1Peer2"
+            identity: "org1peer2"
+            secret: "org1peer2pw"
+            database_type: couchdb
+            tls:
+              enabled: true
+              identity: "org1peer2tls"
+              secret: "org1peer2tlspw"
+            docker:
+              name: peer1.org1.example.com
+              hostname: peer1.org1.example.com
+              port: 18055
+              chaincode_port: 18056
+              operations_port: 18057
+              couchdb:
+                name: couchdb1.org1.example.com
+                hostname: couchdb1.org1.example.com
+                port: 18058
+            ibp:
+              display_name: "Org1 Peer2"
+        nodes: "{{ playbook_dir }}/nodes/Org1"
+        wallet: "{{ playbook_dir }}/wallets/Org1"
+        gateways: "{{ playbook_dir }}/gateways/Org1"
+      - &OrdererOrg
+        msp:
+          id: "OrdererMSP"
+          admin:
+            identity: "ordererAdmin"
+            secret: "ordererAdminpw"
+          ibp:
+            display_name: "Orderer MSP"
+        ca: &OrdererCA
+          id: "OrdererCA"
+          admin_identity: "admin"
+          admin_secret: "adminpw"
+          tls:
+            enabled: true
+          docker:
+            name: ca.orderer.example.com
+            hostname: ca.orderer.example.com
+            port: 17050
+          ibp:
+            display_name: "Orderer CA"
+        orderer: &Orderer
+          id: "Orderer1"
+          identity: "orderer1"
+          secret: "orderer1pw"
+          tls:
+            enabled: true
+            identity: "orderer1tls"
+            secret: "orderer1tlspw"
+          consortium:
+            members:
+              - *Org1
+          docker:
+            name: orderer.example.com
+            hostname: orderer.example.com
+            port: 17051
+            operations_port: 17052
+          ibp:
+            display_name: "Orderer1"
+            cluster_name: "OrdererCluster"
+        nodes: "{{ playbook_dir }}/nodes/Orderer"
+        wallet: "{{ playbook_dir }}/wallets/Orderer"
+        gateways: "{{ playbook_dir }}/gateways/Orderer"
+    channels:
+      - &Channel1
+        name: channel1
+        orderer: *Orderer
+        members:
+          - <<: *Org1
+            committing_peers:
+              - *Org1Peer1
+              - *Org1Peer2
+            anchor_peers:
+              - *Org1Peer1
+    contracts:
+      - name: fabcar
+        version: 1.0.0
+        package: "{{ playbook_dir }}/fabcar@1.0.0.cds"
+        channels:
+          - <<: *Channel1
+            endorsement_policy: "AND('Org1MSP.peer')"
+            endorsing_members:
+              - <<: *Org1
+                endorsing_peers:
+                  - <<: *Org1Peer1
+    gateways:
+      - name: Org1 gateway
+        organization:
+          <<: *Org1
+          gateway_peers:
+            - <<: *Org1Peer1
+  roles:
+    - ibm.blockchain_platform_manager

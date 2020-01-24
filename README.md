@@ -4,6 +4,11 @@
 
 This repository contains a set of example Ansible playbooks for building Hyperledger Fabric networks using the IBM Blockchain Platform. All of the example Ansible playbooks make use of the Ansible role `ibm.blockchain_platform_manager`, available from [Ansible Galaxy](https://galaxy.ansible.com/ibm/blockchain_platform_manager).
 
+one-org-network
+-------
+
+The [one-org-network](one-org-network/README.md) directory contains an Ansible playbook for building a Hyperledger Fabric network with one organization, `Org1`. The organization has two peers. The two peers are configured with a single channel, `channel1`. The FabCar sample contract is instantiated on this channel.
+
 two-org-network
 -------
 

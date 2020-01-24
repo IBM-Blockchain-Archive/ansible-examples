@@ -35,9 +35,21 @@ steps:
       cd /usr/local
       sudo tar xzvf /tmp/hyperledger-fabric-ca-1.4.4-stable-linux-amd64.1.4.4-stable-SNAPSHOT.tar.gz
     displayName: Download Fabric CA CLI
-  - script: ansible-galaxy install -r requirements.yml
+  - script: ansible-galaxy install -r requirements.yml --force
+    workingDirectory: one-org-network
+    displayName: Install Playbook dependencies (one-org-network)
+  - script: |
+      set -ex
+      ansible-playbook playbook.yml
+      ansible-playbook --extra-vars state=absent playbook.yml
+    workingDirectory: one-org-network
+    displayName: Run Playbook (one-org-network)
+  - script: ansible-galaxy install -r requirements.yml --force
     workingDirectory: two-org-network
-    displayName: Install Playbook dependencies
-  - script: ansible-playbook playbook.yml
+    displayName: Install Playbook dependencies (two-org-network)
+  - script: |
+      set -ex
+      ansible-playbook playbook.yml
+      ansible-playbook --extra-vars state=absent playbook.yml
     workingDirectory: two-org-network
-    displayName: Run Playbook
+    displayName: Run Playbook (two-org-network)
